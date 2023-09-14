@@ -8,19 +8,15 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <tool name="Pin">
       <a name="width" val="8"/>
     </tool>
-    <tool name="Probe">
-      <a name="facing" val="south"/>
-    </tool>
     <tool name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="Disable PC"/>
+      <a name="width" val="16"/>
+      <a name="label" val="Data2"/>
       <a name="labelfont" val="SansSerif plain 6"/>
     </tool>
     <tool name="Pull Resistor">
       <a name="facing" val="north"/>
     </tool>
     <tool name="Constant">
-      <a name="facing" val="west"/>
       <a name="value" val="0x0"/>
     </tool>
   </lib>
@@ -43,7 +39,7 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="valign" val="base"/>
     </tool>
   </lib>
-  <main name="Instruction Memory 16-bit"/>
+  <main name="Pipeline Signal WB"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
     <a name="simlimit" val="1000"/>
@@ -73,63 +69,63 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="output" val="true"/>
       <a name="labelloc" val="east"/>
     </tool>
-    <tool lib="1" name="NOT Gate">
-      <a name="facing" val="north"/>
-      <a name="size" val="20"/>
-    </tool>
+    <tool lib="1" name="NOT Gate"/>
     <tool lib="1" name="AND Gate"/>
     <tool lib="1" name="OR Gate"/>
   </toolbar>
-  <circuit name="Instruction Memory 16-bit">
-    <a name="circuit" val="Instruction Memory 16-bit"/>
+  <circuit name="Pipeline Signal WB">
+    <a name="circuit" val="Pipeline Signal WB"/>
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
     <appear>
-      <rect fill="none" height="120" stroke="#000000" stroke-width="2" width="91" x="50" y="30"/>
-      <text font-family="SansSerif" font-size="6" text-anchor="middle" x="69" y="91">Address</text>
-      <text font-family="SansSerif" font-size="6" text-anchor="middle" x="113" y="91">Instruction out</text>
-      <text font-family="SansSerif" font-size="9" font-weight="bold" text-anchor="middle" x="94" y="42">Instruction Memory</text>
-      <polyline fill="none" points="81,57 107,57" stroke="#000000"/>
-      <text font-family="SansSerif" font-size="9" font-weight="bold" text-anchor="middle" x="92" y="54">16-bit</text>
-      <text font-family="SansSerif" font-size="6" text-anchor="middle" x="69" y="143">Disable</text>
-      <circ-port height="8" pin="220,220" width="8" x="46" y="86"/>
-      <circ-port height="10" pin="380,220" width="10" x="135" y="85"/>
-      <circ-port height="8" pin="280,290" width="8" x="66" y="146"/>
-      <circ-anchor facing="east" height="6" width="6" x="137" y="87"/>
+      <rect fill="none" height="40" stroke="#000000" stroke-width="2" width="40" x="50" y="50"/>
+      <polyline fill="none" points="50,80 90,80" stroke="#000000"/>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="64" y="62">W</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="75" y="62">B</text>
+      <path d="M54,90 Q59,76 65,89" fill="none" stroke="#000000"/>
+      <circ-port height="8" pin="310,190" width="8" x="46" y="66"/>
+      <circ-port height="10" pin="400,190" width="10" x="85" y="65"/>
+      <circ-port height="8" pin="340,250" width="8" x="56" y="86"/>
+      <circ-port height="8" pin="370,250" width="8" x="76" y="86"/>
+      <circ-anchor facing="east" height="6" width="6" x="87" y="67"/>
     </appear>
-    <wire from="(370,220)" to="(380,220)"/>
-    <wire from="(220,220)" to="(230,220)"/>
-    <wire from="(280,280)" to="(280,290)"/>
-    <comp lib="1" loc="(280,260)" name="NOT Gate">
-      <a name="facing" val="north"/>
-      <a name="size" val="20"/>
-    </comp>
-    <comp lib="0" loc="(280,290)" name="Pin">
+    <wire from="(320,200)" to="(320,220)"/>
+    <wire from="(310,220)" to="(320,220)"/>
+    <wire from="(340,240)" to="(350,240)"/>
+    <wire from="(360,240)" to="(370,240)"/>
+    <wire from="(310,190)" to="(340,190)"/>
+    <wire from="(370,190)" to="(400,190)"/>
+    <wire from="(320,200)" to="(340,200)"/>
+    <wire from="(360,210)" to="(360,240)"/>
+    <wire from="(350,210)" to="(350,240)"/>
+    <wire from="(340,240)" to="(340,250)"/>
+    <wire from="(370,240)" to="(370,250)"/>
+    <comp lib="0" loc="(370,250)" name="Pin">
       <a name="facing" val="north"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="Disable IM"/>
+      <a name="label" val="Clear"/>
       <a name="labelloc" val="south"/>
     </comp>
-    <comp lib="0" loc="(220,220)" name="Pin">
-      <a name="width" val="16"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="Instruction Address"/>
-      <a name="labelloc" val="south"/>
-    </comp>
-    <comp lib="0" loc="(380,220)" name="Pin">
+    <comp lib="0" loc="(310,220)" name="Constant"/>
+    <comp lib="0" loc="(400,190)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
-      <a name="width" val="16"/>
-      <a name="label" val="Instruction_out"/>
+      <a name="label" val="RegWriteOut"/>
       <a name="labelloc" val="south"/>
     </comp>
-    <comp lib="4" loc="(370,220)" name="ROM">
-      <a name="addrWidth" val="16"/>
-      <a name="dataWidth" val="16"/>
-      <a name="contents">addr/data: 16 16
-0
-</a>
+    <comp lib="4" loc="(370,190)" name="Register">
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="0" loc="(310,190)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="RegWriteIn"/>
+    </comp>
+    <comp lib="0" loc="(340,250)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="Clock"/>
+      <a name="labelloc" val="south"/>
     </comp>
   </circuit>
 </project>
